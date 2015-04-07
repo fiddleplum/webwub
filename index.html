@@ -2,36 +2,38 @@
 	<head>
 		<script src='webgl.js'></script>
 		<script>
+			var gl;
 			function start()
 			{
-				startWebGL('canvas');
-				loadShaderProgram(getGLContextFromCanvas('canvas'), "shader-vs", "shader-fs");
+				gl = startWebGL('canvas');
+				getFile('vertex.shader', function (name, code)
+				{
+					var vertexShaderCode = code;
+				}, function () {});
+				getFile('
+				var shader = createShader(gl, vertexShader, fragmentShader);
+				shader.use();
+				var vbo = createVBO(gl);
+				var vertices = [
+					0, 0, 0,
+					1, 0, 0,
+					0, 1, 0
+					];
+				var indices = [0, 1, 2];
+				vbo.addVertexComponent(0, 0, 3);
+				vbo.setVertices(vertices);
+				vbo.setIndices(indices);
+				vbo.render();
 			}
 
 			function resize()
 			{
-				var canvas = document.getElementById('canvas');
-				resizeWebGL(canvas);
+				resizeWebGL(gl);
 			}
 		</script>
 
-<script id="shader-vs" type="x-shader/x-vertex">
-  attribute vec3 aVertexPosition;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  }
-</script>
-<script id="shader-fs" type="x-shader/x-fragment">
-  void main(void) {
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-  }
-</script>
-
-
+		<script id="shader-vs" type="text/plain" src="vertex.shader"></script>
+		<script id="shader-fs" type="text/plain" src="fragment.shader"></script>
 	</head>
 	<body style='margin: 0;' onload='start();' onresize='resize();' >
 		<canvas id='canvas' style='width: 100%; height: 100%;' />
