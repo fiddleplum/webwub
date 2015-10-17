@@ -1,0 +1,55 @@
+<html>
+<head>
+</head>
+<body>
+<script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+<script src='downloads.js'></script>
+<script>
+function getKey()
+{
+	var key = '';
+	downloads.add('key.js', function(url, text)
+	{
+		key = text;
+	},
+	function(url, status)
+	{
+		console.log('failed to get key');
+	});
+}
+
+function initializeDriveApi(clientIdUrl)
+{
+	downloads.addScript('https://apis.google.com/js/api.js', function(url)
+	{
+		gapi.load('auth', function()
+		{
+			downloads.add(clientIdUrl, function(url, clientId)
+			{
+				gapi.auth.authorize(
+					{
+						client_id: clientId,
+						scope: ['https://www.googleapis.com/auth/drive.metadata.readonly'],
+						immediate: false
+					},
+					function()
+					{
+						console.log("Success!");
+					});
+			}, function(url, status)
+			{
+				console.log('failed to get key');
+			});
+		});
+	},
+	function(url) // fail
+	{
+		console.log('Could not load Google API: ' + url);
+	});
+}
+
+initializeDriveApi('client_id.txt');
+
+</script>
+</body>
+</html>
