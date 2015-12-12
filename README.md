@@ -1,4 +1,5 @@
-# webwub
+# WebWub
+
 A toolkit for web applications
 
 # Coding Rules
@@ -18,3 +19,8 @@ Namespace.functionName = function() {
 }
 
 ```
+
+## Classes
+
+Many Javascript object design patterns advocate member privacy using local variables within function objects. I disagree, however, as making members private makes debugging on browsers very difficult. To make a member internal, just prefix it with a `_`. This way, it will be obvious that the user shouldn't use the member externally, but the user can still probe into the object to see its internal state for debugging.
+
