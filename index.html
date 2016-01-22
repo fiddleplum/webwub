@@ -1,29 +1,39 @@
 <html>
 	<head>
+		<script src='downloader.js'></script>
 		<script src='webgl.js'></script>
+		<script src='shader.js'></script>
 		<script>
 			var gl;
+			var vertexShaderCode = '';
+			var fragmentShaderCode = '';
+			var shader = null;
 			function start()
 			{
 				gl = startWebGL('canvas');
-				getFile('vertex.shader', function (name, code)
-				{
-					var vertexShaderCode = code;
-				}, function () {});
-				getFile('
-				var shader = createShader(gl, vertexShader, fragmentShader);
-				shader.use();
-				var vbo = createVBO(gl);
-				var vertices = [
-					0, 0, 0,
-					1, 0, 0,
-					0, 1, 0
-					];
-				var indices = [0, 1, 2];
-				vbo.addVertexComponent(0, 0, 3);
-				vbo.setVertices(vertices);
-				vbo.setIndices(indices);
-				vbo.render();
+				shader = new Shader('vertex.shader', 'fragment.shader');
+				// downloader.add('vertex.shader', function (name, code)
+				// {
+					// assetsLoaded.push(name);
+					// var vertexShaderCode = code;
+				// });
+				// var shader = createShader(gl, vertexShader, fragmentShader);
+				// shader.use();
+				// var vbo = createVBO(gl);
+				// var vertices = [
+					// 0, 0, 0,
+					// 1, 0, 0,
+					// 0, 1, 0
+					// ];
+				// var indices = [0, 1, 2];
+				// vbo.addVertexComponent(0, 0, 3);
+				// vbo.setVertices(vertices);
+				// vbo.setIndices(indices);
+				// vbo.render();
+			}
+
+			function initialize() {
+				
 			}
 
 			function resize()
