@@ -3,33 +3,28 @@
 		<script src='downloader.js'></script>
 		<script src='webgl.js'></script>
 		<script src='shader.js'></script>
+		<script src='vbo.js'></script>
 		<script>
 			var gl;
-			var vertexShaderCode = '';
-			var fragmentShaderCode = '';
 			var shader = null;
+			var vbo = null;
 			function start()
 			{
 				gl = startWebGL('canvas');
-				shader = new Shader('vertex.shader', 'fragment.shader');
-				// downloader.add('vertex.shader', function (name, code)
-				// {
-					// assetsLoaded.push(name);
-					// var vertexShaderCode = code;
-				// });
-				// var shader = createShader(gl, vertexShader, fragmentShader);
-				// shader.use();
-				// var vbo = createVBO(gl);
-				// var vertices = [
-					// 0, 0, 0,
-					// 1, 0, 0,
-					// 0, 1, 0
-					// ];
-				// var indices = [0, 1, 2];
-				// vbo.addVertexComponent(0, 0, 3);
-				// vbo.setVertices(vertices);
-				// vbo.setIndices(indices);
-				// vbo.render();
+				shader = new Shader(gl, 'vertex.shader', 'fragment.shader', function() {
+				shader.activate();
+				vbo = new VBO(gl);
+				var vertices = [
+					0, 0, 0,
+					1, 0, 0,
+					0, 1, 0
+				];
+				var indices = [0, 1, 2];
+				vbo.addVertexComponent(shader.getAttributeLocation("aVertexPosition"), 0, 3);
+				vbo.setVertices(vertices);
+				vbo.setIndices(indices);
+				vbo.render();
+				});
 			}
 
 			function initialize() {
@@ -41,11 +36,8 @@
 				resizeWebGL(gl);
 			}
 		</script>
-
-		<script id="shader-vs" type="text/plain" src="vertex.shader"></script>
-		<script id="shader-fs" type="text/plain" src="fragment.shader"></script>
 	</head>
-	<body style='margin: 0;' onload='start();' onresize='resize();' >
+	<body style='margin: 0; background: black;' onload='start();' onresize='resize();' >
 		<canvas id='canvas' style='width: 100%; height: 100%;' />
 	</body>
 </html>
