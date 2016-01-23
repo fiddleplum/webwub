@@ -1,29 +1,28 @@
 var downloader = {
 	// url - string
-	// pass - function (string url, string text)
-	// fail - function (string url, int status)
-	add: function(url, pass, fail, thisParam) {
-		var download = new this._Download(url, pass, fail, thisParam, false);
+	// onDownload - function (string url, string text)
+	// onFail - function (string url, int status)
+	add: function(url, onDownload, onFail) {
+		var download = new this._Download(url, onDownload, onFail, false);
 		this._queue.push(download);
 		this._update();
 	},
 	
 	// url - string
-	// pass - function (string url)
-	// fail - function (string url)
-	addScript: function(url, load, fail, thisParam) {
-		var download = new this._Download(url, load, fail, thisParam, true);
+	// onLoad - function (string url)
+	// onFail - function (string url)
+	addScript: function(url, onLoad, onFail) {
+		var download = new this._Download(url, onLoad, onFail, true);
 		this._queue.push(download);
 		this._update();
 	},
 
 	// Internal
 
-	_Download: function(url, pass, fail, thisParam, script) {
+	_Download: function(url, onDownload, onFail, script) {
 		this.url = url;
-		this.pass = pass;
-		this.fail = fail;
-		this.thisParam = thisParam;
+		this.onDownload = onDownload;
+		this.onFail = onFail;
 		this.script = script;
 	},
 
@@ -33,11 +32,11 @@ var downloader = {
 			if(download.script) {
 				var script = document.createElement('script');
 				script.src = download.url;
-				if(download.pass) {
-					script.onload = download.pass.bind(undefined, download.url);
+				if(download.onDownload) {
+					script.onload = download.onDownload.bind(undefined, download.url);
 				}
-				if(download.fail) {
-					script.onerror = download.fail.bind(undefined, download.url);
+				if(download.onFail) {
+					script.onerror = download.onFail.bind(undefined, download.url);
 				}
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
@@ -46,20 +45,12 @@ var downloader = {
 				request.onreadystatechange = function() {
 					if(request.readyState == 4) {
 						if(request.status == 200 || request.status == 0) {
-							if(download.pass) {
-								if(download.thisParam)
-									download.pass.call(download.thisParam, download.url, request.responseText);
-								else
-									download.pass(download.url, request.responseText);
-							}
+							if(download.onDownload)
+								download.onDownload(download.url, request.responseText);
 						}
 						else {
-							if(download.fail) {
-								if(download.thisParam)
-									download.fail.call(download.thisParam, download.url, reques.status);
-								else
-									download.fail(download.url, reques.status);
-							}
+							if(download.onFail)
+								download.onFail(download.url, request.status);
 						}
 						downloader._update();
 					}
