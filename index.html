@@ -12,18 +12,23 @@
 			var shader = null;
 			var vbo = null;
 			var camera = null;
-			function start()
-			{
-				
+			Downloader.setNoCache();
+			Scripts.require('root', ['webgl', 'shader', 'vbo', 'camera'], function() {
 				gl = startWebGL('canvas');
-				//camera = new Camera();
+				camera = new Camera();
+				camera.setPos([0, -1, 0]);
 				shader = new Shader(gl, 'vertex.shader', 'fragment.shader', function() {
 				shader.activate();
+				//debug(Mat4.toString(camera.getW2VMat()));
+				//debug(Mat4.toString(camera.getV2PMat()));
+				shader.setUniformMat4(shader.getUniformLocation("uW2VMatrix"), camera.getW2VMat());
+				shader.setUniformMat4(shader.getUniformLocation("uV2PMatrix"), camera.getV2PMat());
 				vbo = new VBO(gl);
+				var y = 1;
 				var vertices = [
-					0, 0, 0,
-					1, 0, 0,
-					0, 1, 0
+					0, y, 0,
+					1, y, 0,
+					0, y, 1
 				];
 				var indices = [0, 1, 2];
 				vbo.addVertexComponent(shader.getAttributeLocation("aVertexPosition"), 0, 3);
@@ -31,7 +36,7 @@
 				vbo.setIndices(indices);
 				vbo.render();
 				});
-			}
+			});
 
 			function initialize() {
 				
@@ -43,7 +48,7 @@
 			}
 		</script>
 	</head>
-	<body style='margin: 0; background: black;' onload='start();' onresize='resize();' >
+	<body style='margin: 0; background: black;' onresize='resize();' >
 		<canvas id='canvas' style='width: 100%; height: 100%;' />
 	</body>
 </html>

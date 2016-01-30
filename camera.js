@@ -1,17 +1,21 @@
 Scripts.require('camera', ['frame'], function() {
 	Camera = function() {
-		this._fovY = Math.PI / 3;
+		Frame.call(this);
+		this._fovY = Math.PI / 2;
 		this._aspectRatio = 1;
 		this._near = .01;
 		this._far = 10;
 		this._w2vMat = Mat4.create32();
 		this._v2wMat = Mat4.create32();
 		this._v2pMat = Mat4.create32();
-		this._v2pMat[11] = 1;
+		this._v2pMat[5] = 0;
+		this._v2pMat[7] = 1;
+		this._v2pMat[10] = 0;
 		this._v2pMat[15] = 0;
 		this._p2vMat = Mat4.create32();
-		this._p2vMat[6] = 0;
-		this._p2vMat[14] = -1;
+		this._p2vMat[5] = 0;
+		this._p2vMat[10] = 0;
+		this._p2vMat[13] = 1;
 		this._vpMatsDirty = true;
 	}
 
@@ -80,12 +84,12 @@ Scripts.require('camera', ['frame'], function() {
 		var nmf = this._near - this._far;
 		var nf2 = this._near * this._far * 2;
 		this._v2pMat[0] = 1 / fovYTan2AR;
-		this._v2pMat[6] = 1 / fovYTan2;
-		this._v2pMat[9] = npf / nmf;
-		this._v2pMat[13] = -nf2 / nmf;
+		this._v2pMat[6] = -npf / nmf;
+		this._v2pMat[9] = 1 / fovYTan2;
+		this._v2pMat[14] = nf2 / nmf;
 		this._p2vMat[0] = fovYTan2AR;
-		this._p2vMat[9] = fovYTan2;
-		this._p2vMat[7] = nmf / nf2;
+		this._p2vMat[6] = fovYTan2;
+		this._p2vMat[11] = nmf / nf2;
 		this._p2vMat[15]  -npf / nf2;
 		this._vpMatsDirty = false;
 	}

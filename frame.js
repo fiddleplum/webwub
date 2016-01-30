@@ -17,29 +17,29 @@ Scripts.require('frame', ['mat4', 'quat', 'vec3'], function() {
 
 	Frame.prototype.setPos = function(pos) {
 		Vec3.copy(this._pos, pos);
-		_wlMatsDirty = true;
+		this._wlMatsDirty = true;
 	}
 
 	Frame.prototype.setOri = function(ori) {
 		Quat.copy(this._ori, ori);
-		_wlMatsDirty = true;
+		this._wlMatsDirty = true;
 	}
 
 	Frame.prototype.getL2WMat = function() {
-		if(_wlMatsDirty)
+		if(this._wlMatsDirty)
 			this._updateMats();
 		return this._l2wMat;
 	}
 
 	Frame.prototype.getW2LMat = function() {
-		if(_wlMatsDirty)
+		if(this._wlMatsDirty)
 			this._updateMats();
 		return this._w2lMat;
 	}
 
 	Frame.prototype._updateMats = function() {
-		Mat4.setTR(this._l2wMat, pos, ori);
-		Mat4.setTRInv(this._w2LMat, pos, ori);
+		Mat4.setTR(this._l2wMat, this._pos, this._ori);
+		Mat4.setTRInv(this._w2lMat, this._pos, this._ori);
 		this._wlMatsDirty = false;
 	}
 });

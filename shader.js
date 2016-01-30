@@ -25,11 +25,29 @@ Shader.prototype.getAttributeLocation = function(name) {
 	return this._attributes[name];
 }
 
+Shader.prototype.setUniformInt = function(location, value) {
+	this._gl.uniform1i(location, value);
+}
+
+Shader.prototype.setUniformFloat = function(location, value) {
+	this._gl.uniform1f(location, value);
+}
+
+Shader.prototype.setUniformVec3 = function(location, value) {
+	this._gl.uniform3fv(location, value);
+}
+
+Shader.prototype.setUniformMat4 = function(location, value) {
+	this._gl.uniformMatrix4fv(location, false, value);
+}
+
+// Internal
+
 Shader.prototype._onVertexDownload = function(url, text) {
 	this._vertexObject = this._gl.createShader(gl.VERTEX_SHADER);
 	this._gl.shaderSource(this._vertexObject, text);
 	this._gl.compileShader(this._vertexObject);
-	if(!this._gl.getShaderParameter(this._vertexObject, gl.COMPILE_STATUS)) {
+	if(!this._gl.getShaderParameter(this._vertexObject, this._gl.COMPILE_STATUS)) {
 		console.log("The vertex shader object did not compile correctly: " + this._gl.getShaderInfoLog(this._vertexObject));
 		this._vertexObject = null;
 	}
