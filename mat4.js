@@ -1,4 +1,4 @@
-var Mat4 = {};
+Mat4 = {};
 
 Mat4.create = function() { // Creates a identity 64-bit float array
 	var m = new Float64Array(16);
@@ -52,6 +52,25 @@ Mat4.setTR = function(out, v, q) { // rotate then translate matrix
 	out[15] = 1;
 }
 
+Mat4.setTRInv = function(out, v, q) { // rotate then translate matrix
+	out[0]  = 1 - 2 * (q.v[1] * q.v[1] + q.v[2] * q.v[2]);
+	out[1]  = 2 * (q.v[0] * q.v[1] - q.w * q.v[2]);
+	out[2]  = 2 * (q.v[2] * q.v[0] + q.w * q.v[1]);
+	out[3]  = 0;
+	out[4]  = 2 * (q.v[0] * q.v[1] + q.w * q.v[2]);
+	out[5]  = 1 - 2 * (q.v[2] * q.v[2] + q.v[0] * q.v[0]);
+	out[6]  = 2 * (q.v[1] * q.v[2] - q.w * q.v[0]);
+	out[7]  = 0;
+	out[8]  = 2 * (q.v[2] * q.v[0] - q.w * q.v[1]);
+	out[9]  = 2 * (q.v[1] * q.v[2] + q.w * q.v[0]);
+	out[10] = 1 - 2 * (q.v[0] * q.v[0] + q.v[1] * q.v[1]);
+	out[11] = 0;
+	out[12] = -out[0] * v[0] - out[4] * v[1] - out[8] * v[2];
+	out[13] = -out[1] * v[0] - out[5] * v[1] - out[9] * v[2];
+	out[14] = -out[2] * v[0] - out[6] * v[1] - out[10] * v[2];
+	out[15] = 1;
+}
+
 Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matrix
 	Mat4.setTR(out, v, q);
 	out[0]  *= s[0];
@@ -63,6 +82,13 @@ Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matri
 	out[8]  *= s[2];
 	out[9]  *= s[2];
 	out[10] *= s[2];
+}
+
+Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matrix
+	Mat4.setTRInv(out, v, q);
+	out[0]  /= s[0];
+	out[5]  /= s[1];
+	out[10] /= s[2];
 }
 
 Mat4.mult = function(out, m0, m1) {

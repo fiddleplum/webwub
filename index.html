@@ -1,16 +1,22 @@
 <html>
 	<head>
+		<script src='util.js'></script>
 		<script src='downloader.js'></script>
+		<script src='scripts.js'></script>
 		<script src='webgl.js'></script>
 		<script src='shader.js'></script>
 		<script src='vbo.js'></script>
+		<script src='camera.js'></script>
 		<script>
 			var gl;
 			var shader = null;
 			var vbo = null;
+			var camera = null;
 			function start()
 			{
+				
 				gl = startWebGL('canvas');
+				//camera = new Camera();
 				shader = new Shader(gl, 'vertex.shader', 'fragment.shader', function() {
 				shader.activate();
 				vbo = new VBO(gl);
