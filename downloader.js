@@ -1,5 +1,9 @@
 Downloader = {}
 
+Downloader.setNoCache = function() {
+	this._noCache = true;
+}
+
 // url - string
 // onDownload - function (string url, string text)
 // onFail - function (string url, int status)
@@ -51,7 +55,7 @@ Downloader._update = function() {
 				Downloader._update();
 			}
 		}
-		request.open("GET", download.url, true);
+		request.open("GET", download.url + (this._noCache ? ('?' + new Date().getTime()) : ''), true);
 		request.send();
 	}
 }
@@ -59,3 +63,4 @@ Downloader._update = function() {
 Downloader._active = [];
 Downloader._queue = [];
 Downloader._maxActive = 10;
+Downloader._noCache = false;
