@@ -34,17 +34,17 @@ Mat4.setIdentity = function(out) {
 }
 
 Mat4.setTR = function(out, v, q) { // rotate then translate matrix
-	out[0]  = 1 - 2 * (q.v[1] * q.v[1] + q.v[2] * q.v[2]);
-	out[1]  = 2 * (q.v[0] * q.v[1] + q.w * q.v[2]);
-	out[2]  = 2 * (q.v[2] * q.v[0] - q.w * q.v[1]);
+	out[0]  = 1 - 2 * (q[1] * q[1] + q[2] * q[2]);
+	out[1]  = 2 * (q[0] * q[1] + q[3] * q[2]);
+	out[2]  = 2 * (q[2] * q[0] - q[3] * q[1]);
 	out[3]  = 0;
-	out[4]  = 2 * (q.v[0] * q.v[1] - q.w * q.v[2]);
-	out[5]  = 1 - 2 * (q.v[2] * q.v[2] + q.v[0] * q.v[0]);
-	out[6]  = 2 * (q.v[1] * q.v[2] + q.w * q.v[0]);
+	out[4]  = 2 * (q[0] * q[1] - q[3] * q[2]);
+	out[5]  = 1 - 2 * (q[2] * q[2] + q[0] * q[0]);
+	out[6]  = 2 * (q[1] * q[2] + q[3] * q[0]);
 	out[7]  = 0;
-	out[8]  = 2 * (q.v[2] * q.v[0] + q.w * q.v[1]);
-	out[9]  = 2 * (q.v[1] * q.v[2] - q.w * q.v[0]);
-	out[10] = 1 - 2 * (q.v[0] * q.v[0] + q.v[1] * q.v[1]);
+	out[8]  = 2 * (q[2] * q[0] + q[3] * q[1]);
+	out[9]  = 2 * (q[1] * q[2] - q[3] * q[0]);
+	out[10] = 1 - 2 * (q[0] * q[0] + q[1] * q[1]);
 	out[11] = 0;
 	out[12] = v[0];
 	out[13] = v[1];
@@ -53,17 +53,17 @@ Mat4.setTR = function(out, v, q) { // rotate then translate matrix
 }
 
 Mat4.setTRInv = function(out, v, q) { // rotate then translate matrix
-	out[0]  = 1 - 2 * (q.v[1] * q.v[1] + q.v[2] * q.v[2]);
-	out[1]  = 2 * (q.v[0] * q.v[1] - q.w * q.v[2]);
-	out[2]  = 2 * (q.v[2] * q.v[0] + q.w * q.v[1]);
+	out[0]  = 1 - 2 * (q[1] * q[1] + q[2] * q[2]);
+	out[1]  = 2 * (q[0] * q[1] - q[3] * q[2]);
+	out[2]  = 2 * (q[2] * q[0] + q[3] * q[1]);
 	out[3]  = 0;
-	out[4]  = 2 * (q.v[0] * q.v[1] + q.w * q.v[2]);
-	out[5]  = 1 - 2 * (q.v[2] * q.v[2] + q.v[0] * q.v[0]);
-	out[6]  = 2 * (q.v[1] * q.v[2] - q.w * q.v[0]);
+	out[4]  = 2 * (q[0] * q[1] + q[3] * q[2]);
+	out[5]  = 1 - 2 * (q[2] * q[2] + q[0] * q[0]);
+	out[6]  = 2 * (q[1] * q[2] - q[3] * q[0]);
 	out[7]  = 0;
-	out[8]  = 2 * (q.v[2] * q.v[0] - q.w * q.v[1]);
-	out[9]  = 2 * (q.v[1] * q.v[2] + q.w * q.v[0]);
-	out[10] = 1 - 2 * (q.v[0] * q.v[0] + q.v[1] * q.v[1]);
+	out[8]  = 2 * (q[2] * q[0] - q[3] * q[1]);
+	out[9]  = 2 * (q[1] * q[2] + q[3] * q[0]);
+	out[10] = 1 - 2 * (q[0] * q[0] + q[1] * q[1]);
 	out[11] = 0;
 	out[12] = -out[0] * v[0] - out[4] * v[1] - out[8] * v[2];
 	out[13] = -out[1] * v[0] - out[5] * v[1] - out[9] * v[2];
@@ -93,7 +93,7 @@ Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matri
 
 Mat4.mult = function(out, m0, m1) {
 	out[0]  = m0[0] * m1[0]  + m0[4] * m1[1]  + m0[8]  * m1[2]  + m0[12] * m1[3];
-	out[1]  = m0[1] * m1[0]  + m0[5] * m1[1]  + m0[8]  * m1[2]  + m0[13] * m1[3];
+	out[1]  = m0[1] * m1[0]  + m0[5] * m1[1]  + m0[9]  * m1[2]  + m0[13] * m1[3];
 	out[2]  = m0[2] * m1[0]  + m0[6] * m1[1]  + m0[10] * m1[2]  + m0[14] * m1[3];
 	out[3]  = m0[3] * m1[0]  + m0[7] * m1[1]  + m0[11] * m1[2]  + m0[15] * m1[3];
 	out[4]  = m0[0] * m1[4]  + m0[4] * m1[5]  + m0[8]  * m1[6]  + m0[12] * m1[7];
@@ -112,8 +112,14 @@ Mat4.mult = function(out, m0, m1) {
 
 Mat4.multVec3 = function(out, m, v, w) { // returns a Vec3 and uses w as the fourth component
 	out[0] = m[0] * v[0] + m[4] * v[1] + m[8]  * v[2] + m[12] * w;
-	out[1] = m[1] * v[0] + m[5] * v[1] + m[8]  * v[2] + m[13] * w;
+	out[1] = m[1] * v[0] + m[5] * v[1] + m[9]  * v[2] + m[13] * w;
 	out[2] = m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14] * w;
 	out[3] = m[3] * v[0] + m[7] * v[1] + m[11] * v[2] + m[15] * w;
 }
 
+Mat4.toString = function(m) {
+	return m[0] + ',' + m[4] + ',' + m[8]  + ',' + m[12] + '\n'
+		+ m[1] + ',' + m[5] + ',' + m[9]  + ',' + m[13] + '\n'
+		+ m[2] + ',' + m[6] + ',' + m[10] + ',' + m[14] + '\n'
+		+ m[3] + ',' + m[7] + ',' + m[11] + ',' + m[15];
+}
