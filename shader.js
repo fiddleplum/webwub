@@ -5,8 +5,8 @@ var Shader = function(gl, vertexUrl, fragmentUrl, onReady) {
 	this._onReady = onReady;
 	this._uniforms = {};
 	this._attributes = {};
-	downloader.add(vertexUrl, this._onVertexDownload.bind(this), null);
-	downloader.add(fragmentUrl, this._onFragmentDownload.bind(this), null);
+	Downloader.add(vertexUrl, this._onVertexDownload.bind(this), null);
+	Downloader.add(fragmentUrl, this._onFragmentDownload.bind(this), null);
 }
 
 Shader.prototype.cleanUp = function() {

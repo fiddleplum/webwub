@@ -1,4 +1,4 @@
-var glContexts = {}
+glContexts = {}
 
 function startWebGL(canvasId)
 {

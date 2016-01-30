@@ -1,7 +1,7 @@
 // right = x (0), forward = y (1), up = z (2)
 // stored as [x, y, z, w] so that it can be used directly with vec3
 
-var Quat = {};
+Quat = {};
 
 Quat.create = function() {
 	return new Float64Array([0, 0, 0, 1]);

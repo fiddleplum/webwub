@@ -5,14 +5,14 @@ It uses an out vector so that vectors aren't constantly created and destroyed.
 
 */
 
-var Vec3 = {};
+Vec3 = {};
 
 Vec3.create = function() {
-	return new Float64Array(3);
+	return new Float64Array(3); // initialized to zero
 }
 
 Vec3.create32 = function() {
-	return new Float32Array(3);
+	return new Float32Array(3); // initialized to zero
 }
 
 Vec3.copy = function(out, v) {
@@ -89,7 +89,7 @@ Vec3.clamp = function(out, v, min, max) {
 	out[2] = Math.max(min, Math.min(max, v[2]));
 }
 
-Vec3.lerp : function(out, v0, v1, t) {
+Vec3.lerp = function(out, v0, v1, t) {
 	out[0] = v0[0] + (v1[0] - v0[0]) * t;
 	out[1] = v0[1] + (v1[1] - v0[1]) * t;
 	out[2] = v0[2] + (v1[2] - v0[2]) * t;
