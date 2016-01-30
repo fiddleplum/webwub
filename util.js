@@ -13,17 +13,22 @@ debug = function(object, level) {
 		level = 0;
 	var s = '';
 	if(typeof object === 'object') {
-		if(level != 0)
-			s += "\n";
-		var first = true;
-		foreach(object, function(key, value) {
-			if(!first)
-				s += ",\n";
-			else
-				first = false;
-			s += " ".repeat((level + 1) * 2) + key + ": " + debug(value, level + 1);
-		});
-		s += "";
+		if(object.toString) {
+			s = object.toString();
+		}
+		else {
+			if(level != 0)
+				s += "\n";
+			var first = true;
+			foreach(object, function(key, value) {
+				if(!first)
+					s += ",\n";
+				else
+					first = false;
+				s += " ".repeat((level + 1) * 2) + key + ": " + debug(value, level + 1);
+			});
+			s += "";
+		}
 	}
 	else if(typeof object === 'function')
 		s = 'function';
