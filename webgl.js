@@ -10,6 +10,7 @@ function startWebGL(canvasId)
 	{
 		console.log("WebGL could not be started.");
 	}
+	gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 	gl.clearColor(0, 0, 0, 1);
 	gl.enable(gl.DEPTH_TEST);
 	gl.depthFunc(gl.LEQUAL);
@@ -21,7 +22,7 @@ function resizeWebGL(gl)
 {
 	canvas.width = canvas.offsetWidth;
 	canvas.height = canvas.offsetHeight;
-	gl.viewport(0, 0, canvas.width, canvas.height);
+	gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 }
 
 function getGLContextFromCanvas(id)
