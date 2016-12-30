@@ -5,7 +5,7 @@ Downloader.setNoCache = function() {
 }
 
 // url - string
-// onDownload - function (string url, string text)
+// onDownload - function (string url, string content)
 // onFail - function (string url, int status)
 Downloader.add = function(url, onDownload, onFail) {
 	var download = new this._Download(url, onDownload, onFail, false);
