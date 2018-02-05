@@ -5,8 +5,6 @@ Scripts.require('camera', ['frame'], function() {
 		this._aspectRatio = 1;
 		this._near = .01;
 		this._far = 10;
-		this._w2vMat = Mat4.create32();
-		this._v2wMat = Mat4.create32();
 		this._v2pMat = Mat4.create32();
 		this._v2pMat[5] = 0;
 		this._v2pMat[7] = 1;
@@ -90,7 +88,7 @@ Scripts.require('camera', ['frame'], function() {
 		this._p2vMat[0] = fovYTan2AR;
 		this._p2vMat[6] = fovYTan2;
 		this._p2vMat[11] = nmf / nf2;
-		this._p2vMat[15]  -npf / nf2;
+		this._p2vMat[15] = -npf / nf2;
 		this._vpMatsDirty = false;
 	}
 });

@@ -8,12 +8,13 @@
 		<script src='vbo.js'></script>
 		<script src='camera.js'></script>
 		<script>
+			var canvas = document.getElementById('canvas');
 			var gl;
 			var shader = null;
 			var vbo = null;
 			var camera = null;
 			Downloader.setNoCache();
-			Scripts.require('root', ['webgl', 'shader', 'vbo', 'camera'], function() {
+			Scripts.require('root', ['webgl', 'shader', 'vbo', 'camera', 'free_controller'], function() {
 				gl = startWebGL('canvas');
 				camera = new Camera();
 				camera.setPos([0, -1, 0]);
@@ -35,6 +36,7 @@
 				vbo.setVertices(vertices);
 				vbo.setIndices(indices);
 				vbo.render();
+				var c = FreeController(
 				});
 			});
 

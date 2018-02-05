@@ -84,7 +84,7 @@ Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matri
 	out[10] *= s[2];
 }
 
-Mat4.setTRS = function(out, v, q, s) { // scale then rotate then translate matrix
+Mat4.setTRSInv = function(out, v, q, s) { // scale then rotate then translate matrix
 	Mat4.setTRInv(out, v, q);
 	out[0]  /= s[0];
 	out[5]  /= s[1];
