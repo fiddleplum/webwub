@@ -68,3 +68,5 @@ class Pool {
 		this._numFreeIndices += 1;
 	}
 }
+
+export default Pool;

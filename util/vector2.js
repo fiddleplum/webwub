@@ -1,4 +1,5 @@
 import Freezable from './freezable'
+import Pool from './pool'
 
 /**
  * A two-dimensional vector.
@@ -7,6 +8,8 @@ class Vector2 extends Freezable {
 	/**
 	 * Constructor.
 	 * Sets all components to zero.
+	 * @param {number?} x
+	 * @param {number?} y
 	 */
 	constructor(x = 0, y = 0) {
 		super();

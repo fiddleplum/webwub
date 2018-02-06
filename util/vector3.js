@@ -1,4 +1,6 @@
 import Freezable from './freezable'
+import Pool from './pool'
+import Quaternion from './quaternion'
 
 /**
  * A three-dimensional vector.
@@ -7,6 +9,9 @@ class Vector3 extends Freezable {
 	/**
 	 * Constructor.
 	 * Sets all components to zero.
+	 * @param {number?} x
+	 * @param {number?} y
+	 * @param {number?} z
 	 */
 	constructor(x = 0, y = 0, z = 0) {
 		super();
@@ -224,7 +229,7 @@ class Vector3 extends Freezable {
 	 * @param {Vector3} a
 	 * @param {number} min
 	 * @param {number} max
-	*/
+	 */
 	clamp(a, min, max) {
 		this.throwIfFrozen();
 		this._x = Math.max(min, Math.min(max, a._x));
@@ -236,12 +241,28 @@ class Vector3 extends Freezable {
 	 * @param {Vector3} a
 	 * @param {Vector3} b
 	 * @param {number} u
-	*/
+	 */
 	lerp(a, b, u) {
 		this.throwIfFrozen();
 		this._x = a._x + (b._x - a._x) * u;
 		this._y = a._y + (b._y - a._y) * u;
 		this._z = a._z + (b._z - a._z) * u;
+	}
+
+	/**
+	 * Sets this to b rotated by a.
+	 * @param {Quaternion} a
+	 * @param {Vector3} b
+	 */
+	rotate(a, b) {
+		this.throwIfFrozen();
+		let x = 2 * (a._y * b._z - a._z * b._y);
+		let y = 2 * (a._z * b._x - a._x * b._z);
+		let z = 2 * (a._x * b._y - a._y * b._x);
+		this._x = b._x + a._w * x + a._y * z - a._z * y;
+		this._y = b._y + a._w * y + a._z * x - a._x * z;
+		this._z = b._z + a._w * z + a._x * y - a._y * x;
+		// from http://blog.molecular-matters.com/2013/05/24/a-faster-quaternion-vector-multiplication/
 	}
 }
 
