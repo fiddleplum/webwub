@@ -1,6 +1,6 @@
-import Freezable from './freezable'
-import Pool from './pool'
-import Quaternion from './quaternion'
+import Freezable from './freezable.js'
+import Pool from './pool.js'
+import Quaternion from './quaternion.js'
 
 /**
  * A three-dimensional vector.

@@ -1,6 +1,6 @@
-import Matrix44 from './matrix44'
-import Quaternion from './quaternion'
-import Vector3 from './vector3'
+import Matrix44 from './matrix44.js'
+import Quaternion from './quaternion.js'
+import Vector3 from './vector3.js'
 
 /**
  * A 4x4 matrix that represents a scale, rotation, and a translation.
@@ -93,3 +93,5 @@ class Transform extends Matrix44 {
 		this._v[10] /= s[2];
 	}
 }
+
+export default Transform;

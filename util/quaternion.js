@@ -1,6 +1,6 @@
-import Freezable from './freezable'
-import Pool from './pool'
-import Vector3 from './vector3'
+import Freezable from './freezable.js'
+import Pool from './pool.js'
+import Vector3 from './vector3.js'
 
 /**
  * A quaternion.

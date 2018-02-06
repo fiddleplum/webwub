@@ -1,5 +1,5 @@
-import Freezable from './freezable'
-import Pool from './pool'
+import Freezable from './freezable.js'
+import Pool from './pool.js'
 
 /**
  * A two-dimensional vector.
